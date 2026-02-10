@@ -34,6 +34,6 @@ app.get("/api/messages", async (req, res) => {
   res.json(result.rows);
 });
 
-app.listen(3000, () => {
+app.listen(3000, "0.0.0.0", () => {
   console.log("Server running on 3000");
 });
