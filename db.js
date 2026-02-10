@@ -1,6 +1,6 @@
 const oracledb = require("oracledb");
 
-oracledb.initOracleClient({ libDir: "/usr/lib/oracle" });
+// oracledb.initOracleClient({ libDir: "/usr/lib/oracle" });
 
 async function getConnection() {
   return await oracledb.getConnection({
