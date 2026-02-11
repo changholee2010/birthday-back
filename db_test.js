@@ -13,7 +13,7 @@ async function run() {
     try {
       oracledb.initOracleClient({
         // Instant Client 라이브러리 위치
-        libDir: "/opt/oracle/instantclient_21_13",
+        libDir: "/opt/oracle/instantclient_21_21",
         // tnsnames.ora, sqlnet.ora가 있는 Wallet 위치
         configDir: "/home/ubuntu/wallet",
       });
