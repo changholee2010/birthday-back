@@ -1,39 +1,51 @@
 const express = require("express");
+const oracledb = require("oracledb");
 const cors = require("cors");
-const getConnection = require("./db");
+require("dotenv").config(); // DB 접속 정보를 환경변수로 관리
 
 const app = express();
-app.use(cors());
 app.use(express.json());
+app.use(cors()); // 외부(GitHub Pages) 접근 허용
 
-app.get("/api/health", (req, res) => {
-  res.json({ status: "ok" });
-});
+// Oracle DB 연결 설정
+const dbConfig = {
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  connectString: process.env.DB_CONNECT_STRING, // 예: localhost:1521/xe
+};
 
+// 1. 메시지 저장 API (POST)
 app.post("/api/messages", async (req, res) => {
-  const { name, message } = req.body;
-  const conn = await getConnection();
-
-  await conn.execute(
-    `INSERT INTO birthday_messages (name, message)
-     VALUES (:name, :message)`,
-    { name, message },
-    { autoCommit: true },
-  );
-
-  await conn.close();
-  res.json({ success: true });
+  let conn;
+  try {
+    const { writer, content } = req.body;
+    conn = await oracledb.getConnection(dbConfig);
+    const sql = `INSERT INTO CHURCH_MESSAGES (WRITER, CONTENT) VALUES (:writer, :content)`;
+    await conn.execute(sql, { writer, content }, { autoCommit: true });
+    res.status(201).send({ message: "축하 메시지가 등록되었습니다!" });
+  } catch (err) {
+    res.status(500).send(err.message);
+  } finally {
+    if (conn) await conn.close();
+  }
 });
 
+// 2. 메시지 목록 조회 API (GET)
 app.get("/api/messages", async (req, res) => {
-  const conn = await getConnection();
-  const result = await conn.execute(
-    `SELECT name, message FROM birthday_messages ORDER BY id DESC`,
-  );
-  await conn.close();
-  res.json(result.rows);
+  let conn;
+  try {
+    conn = await oracledb.getConnection(dbConfig);
+    const result = await conn.execute(
+      `SELECT WRITER, CONTENT FROM CHURCH_MESSAGES ORDER BY REG_DATE DESC`,
+      {},
+      { outFormat: oracledb.OUT_FORMAT_OBJECT },
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).send(err.message);
+  } finally {
+    if (conn) await conn.close();
+  }
 });
 
-app.listen(3000, "0.0.0.0", () => {
-  console.log("Server running on 3000");
-});
+app.listen(3000, () => console.log("Server running on port 3000"));
