@@ -3,7 +3,7 @@ const path = require("path");
 
 // Wallet 디렉토리의 절대 경로 설정
 const walletPath = path.join(__dirname, "..", "wallet");
-console.log9("Wallet Path:", walletPath);
+console.log("Wallet Path:", walletPath);
 
 async function run() {
   try {
