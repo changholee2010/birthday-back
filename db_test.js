@@ -9,7 +9,18 @@ async function run() {
   try {
     // 1. Oracle Client 초기화 (Wallet 경로 지정)
     // TNS_ADMIN은 tnsnames.ora와 sqlnet.ora가 있는 위치입니다.
-    await oracledb.initOracleClient({ configDir: walletPath });
+    // await oracledb.initOracleClient({ configDir: walletPath });
+    try {
+      oracledb.initOracleClient({
+        // Instant Client 라이브러리 위치
+        libDir: "/opt/oracle/instantclient_21_13",
+        // tnsnames.ora, sqlnet.ora가 있는 Wallet 위치
+        configDir: "/home/ubuntu/wallet",
+      });
+    } catch (err) {
+      console.error("Oracle Client 초기화 실패:", err);
+      process.exit(1);
+    }
 
     // 2. DB 연결
     const connection = await oracledb.getConnection({
