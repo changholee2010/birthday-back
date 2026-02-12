@@ -33,6 +33,13 @@ async function run() {
     console.log("Oracle Wallet으로 접속 성공!");
 
     // ... 쿼리 실행 ...
+    const result = await conn.execute(
+      `select * from CHURCH_MESSAGES`,
+      {},
+      { outFormat: oracledb.OUT_FORMAT_OBJECT },
+    );
+
+    console.log(result.rows);
   } catch (err) {
     console.error(err);
   }
