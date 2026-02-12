@@ -1,5 +1,6 @@
 const oracledb = require("oracledb");
 const path = require("path");
+require("dotenv").config();
 
 // Wallet 디렉토리의 절대 경로 설정
 const walletPath = path.join(__dirname, "..", "wallet");
@@ -24,9 +25,9 @@ async function run() {
 
     // 2. DB 연결
     const connection = await oracledb.getConnection({
-      user: "user01",
-      password: "dhfkzmfDB2010",
-      connectionString: "gce4l3azna7cfunu_high", // tnsnames.ora에 정의된 이름
+      user: process.env.DB_USER_R,
+      password: process.env.DB_PASSWORD_R,
+      connectionString: process.env.DB_CONNECT_STRING_R, // tnsnames.ora에 정의된 이름
     });
 
     console.log("Oracle Wallet으로 접속 성공!");
