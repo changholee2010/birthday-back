@@ -38,7 +38,7 @@ async function run() {
       {},
       { outFormat: oracledb.OUT_FORMAT_OBJECT },
     );
-
+    // 결과 출력
     console.log(result.rows);
   } catch (err) {
     console.error(err);
