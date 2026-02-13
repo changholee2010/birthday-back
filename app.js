@@ -45,4 +45,5 @@ app.get("/api/messages", async (req, res) => {
   }
 });
 
+// 서버 시작 전체ip를 허용.
 app.listen(3000, "0.0.0.0", () => console.log("Server running on port 3000"));
