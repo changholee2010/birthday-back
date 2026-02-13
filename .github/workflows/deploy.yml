@@ -1,0 +1,21 @@
+name: Node.js Deploy to OCI
+
+on:
+  push:
+    branches: [ main ] # 메인 브랜치에 푸시될 때 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH Remote Commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.OCI_HOST }}      # OCI 인스턴스 IP
+          username: opc                     # 기본 사용자 (Oracle Linux 기준)
+          key: ${{ secrets.OCI_PRIVATE_KEY }} # SSH 프라이빗 키
+          script: |
+            cd /home/ubuntu/birthday-back/ # 프로젝트 경로로 이동
+            git pull origin main             # 최신 코드 가져오기
+            npm install                      # 의존성 설치
+            pm2 reload all                   # 서비스 재시작 (또는 pm2 reload app_name)
