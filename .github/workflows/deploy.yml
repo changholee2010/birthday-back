@@ -12,7 +12,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.OCI_HOST }}      # OCI 인스턴스 IP
-          username: opc                     # 기본 사용자 (Oracle Linux 기준)
+          username: ubuntu                     # 기본 사용자 (Oracle Linux 기준)
           key: ${{ secrets.OCI_PRIVATE_KEY }} # SSH 프라이빗 키
           script: |
             cd /home/ubuntu/birthday-back/ # 프로젝트 경로로 이동
