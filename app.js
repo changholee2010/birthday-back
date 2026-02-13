@@ -7,6 +7,10 @@ const app = express();
 app.use(express.json());
 app.use(cors()); // 외부(GitHub Pages) 접근 허용
 
+app.get("/", (req, res) => {
+  res.send("Birthday Back Server is running");
+});
+
 // 1. 메시지 저장 API (POST)
 app.post("/api/messages", async (req, res) => {
   let conn;
