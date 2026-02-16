@@ -1,5 +1,12 @@
 const oracledb = require("oracledb");
+require("dotenv").config(); // DB 접속 정보를 환경변수로 관리
 
+// Oracle DB 연결 설정
+const dbConfig = {
+  user: process.env.DB_USER_R,
+  password: process.env.DB_PASSWORD_R,
+  connectString: process.env.DB_CONNECT_STRING_R, // 예: localhost:1521/xe
+};
 // oracledb.initOracleClient({ libDir: "/usr/lib/oracle" });
 oracledb.initOracleClient({
   // Instant Client 라이브러리 위치
@@ -9,11 +16,7 @@ oracledb.initOracleClient({
 });
 
 async function getConnection() {
-  return await oracledb.getConnection({
-    user: "user01",
-    password: "dhfkzmfDB2010",
-    connectString: "gce4l3azna7cfunu_high",
-  });
+  return await oracledb.getConnection(dbConfig);
 }
 
 module.exports = getConnection;
