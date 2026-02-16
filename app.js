@@ -11,10 +11,6 @@ app.get("/", (req, res) => {
   res.send("Birthday Back Server is running");
 });
 
-app.get("/", (req, res) => {
-  res.send("생일 축하 메시지 API 서버입니다!");
-});
-
 // 1. 메시지 저장 API (POST)
 app.post("/api/messages", async (req, res) => {
   let conn;
