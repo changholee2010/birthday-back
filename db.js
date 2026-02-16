@@ -5,7 +5,7 @@ require("dotenv").config(); // DB 접속 정보를 환경변수로 관리
 const dbConfig = {
   user: process.env.DB_USER_R,
   password: process.env.DB_PASSWORD_R,
-  connectString: process.env.DB_CONNECT_STRING_R, // 예: localhost:1521/xe
+  connectionString: process.env.DB_CONNECT_STRING_R, // 예: localhost:1521/xe
 };
 // oracledb.initOracleClient({ libDir: "/usr/lib/oracle" });
 oracledb.initOracleClient({
