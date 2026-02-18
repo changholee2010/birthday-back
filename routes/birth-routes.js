@@ -3,7 +3,7 @@ const oracledb = require("oracledb");
 const getConnection = require("../db");
 
 router.get("/", (req, res) => {
-  res.send("API is working");
+  res.send("API is working...");
 });
 
 // 1. 메시지 저장 API (POST)
