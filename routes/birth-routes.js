@@ -2,6 +2,10 @@ const router = require("express").Router();
 const oracledb = require("oracledb");
 const getConnection = require("../db");
 
+router.get("/", (req, res) => {
+  res.send("API is working");
+});
+
 // 1. 메시지 저장 API (POST)
 router.post("/messages", async (req, res) => {
   let conn;
